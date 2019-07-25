@@ -4,11 +4,13 @@
 #     strategy_name: a string
 #     strategy_description: a string
 #     move: A function that returns 'c' or 'b'
+import random
+
 ####
 
-team_name = 'The name the team gives to itself' # Only 10 chars displayed.
-strategy_name = 'The name the team gives to this strategy'
-strategy_description = 'How does this strategy decide?'
+team_name = 'Team Blarko' # Only 10 chars displayed.
+strategy_name = 'What is even What is odd'
+strategy_description = 'Determining number of collusions and betrayals of opponent. Based on whether values are even or odd we determine our response.'
     
 def move(my_history, their_history, my_score, their_score):
     ''' Arguments accepted: my_history, their_history are strings.
@@ -24,7 +26,35 @@ def move(my_history, their_history, my_score, their_score):
     # The most recent round is my_history[-1] and their_history[-1].
     
     # Analyze my_history and their_history and/or my_score and their_score.
-    # Decide whether to return 'c' or 'b'.
+    # Decide whether c_count = 0
+    b_count = 0
+    c_count = 0
+
+    #count up the total number of opponent c's and b's in their_history:
+    for letter in their_history:
+        if (letter == 'c'):
+            c_count += 1
+        else:
+            b_count += 1
+
+    #If both c's and b's are even collude
+    if (c_count % 2 == 0 and b_count % 2 == 0):
+        return 'c'
+    #If c's are even and b's are odd collude if winning, betray if losing
+    elif (c_count % 2 == 0 and b_count % 2 == 1):
+        if (my_score > their_score):
+            return 'c'
+        else:
+            return 'b'
+    #If c's are odd and b's are even betray if winning, collude if losing
+    elif (c_count % 2 == 1 and b_count % 2 == 0):
+        if (my_score > their_score):
+            return 'b'
+        else:
+            return 'c'
+    #If c's and b's are odd betray
+    else:
+        return 'b'
     
     return 'c'
 
