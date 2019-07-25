@@ -4,7 +4,7 @@
 #     strategy_name: a string
 #     strategy_description: a string
 #     move: A function that returns 'c' or 'b' Bob
-####
+####23
 
 team_name = 'E0'
 strategy_name = 'Collude'
